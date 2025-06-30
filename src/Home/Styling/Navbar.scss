@@ -1,55 +1,86 @@
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: linear-gradient(to right, #4f46e5, #6366f1);
-  transition: transform 0.3s ease-in-out;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+@import './variables'; // Import the variables file
 
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: transform $transition-base, opacity $transition-base;
+  
+  @include glass-effect;
+  
   &--hidden {
     transform: translateY(-100%);
+    opacity: 0;
   }
 
   &__container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem 2rem;
+    @include container;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    height: 72px;
   }
 
   &__logo {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: $gray-800;
+    transition: color $transition-fast;
 
-    & .navbar__icon {
-      background-color: #6366f1;
-      border-radius: 50%;
-      padding: 0.4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    & .navbar__brand {
-      color: white;
-      font-size: 1.25rem;
-      font-weight: bold;
+    &:hover {
+      color: $primary-blue;
     }
   }
 
-  &__button {
-    background-color: white;
-    color: #4f46e5;
-    padding: 0.5rem 1.25rem;
-    border-radius: 999px;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: $primary-blue;
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
 
     &:hover {
-      background-color: #e0e7ff;
+      background: $primary-blue-dark;
+      transform: translateY(-1px);
+      box-shadow: $shadow-md;
+    }
+  }
+
+  &__brand {
+    font-family: $font-display;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $gray-800;
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: $primary-blue;
+    color: $white;
+    text-decoration: none;
+    border-radius: $border-radius-sm;
+    font-weight: 600;
+    transition: all $transition-fast;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background: $primary-blue-dark;
+      transform: translateY(-1px);
+      box-shadow: $shadow-md;
+    }
+
+    &:active {
+      transform: translateY(0);
     }
   }
 }

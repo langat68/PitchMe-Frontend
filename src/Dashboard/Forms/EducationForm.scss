@@ -1,0 +1,152 @@
+.education-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    p {
+      margin-top: 0.5rem;
+      color: #4b5563;
+    }
+
+    .add-button {
+      background-color: #2563eb;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      &:hover {
+        background-color: #1d4ed8;
+      }
+    }
+  }
+
+  &__empty {
+    border: 2px dashed #d1d5db;
+
+    .icon {
+      width: 3rem;
+      height: 3rem;
+      color: #9ca3af;
+      margin: 0 auto 1rem;
+
+      // Optional dark mode support
+      [data-theme="dark"] & {
+        color: #d1d5db;
+      }
+    }
+
+    h3 {
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: #111827;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      color: #4b5563;
+      margin-bottom: 1rem;
+    }
+
+    .add-button {
+      background-color: #2563eb;
+
+      &:hover {
+        background-color: #1d4ed8;
+      }
+    }
+  }
+
+  &__card {
+    position: relative;
+
+    .card-header {
+      padding-bottom: 1rem;
+
+      .card-title-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .title-group {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+        }
+
+        .remove-button {
+          color: #dc2626;
+          transition: background 0.2s ease;
+
+          &:hover {
+            background-color: #fef2f2;
+            color: #b91c1c;
+          }
+
+          .icon {
+            width: 1rem;
+            height: 1rem;
+          }
+        }
+      }
+    }
+
+    .card-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+
+      @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .full-width {
+        grid-column: span 2;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+  }
+
+  &__tips {
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+
+    .tips-header {
+      color: #1e40af;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 1rem;
+      color: #1e3a8a;
+
+      li {
+        position: relative;
+        padding-left: 0.5rem;
+
+        &::before {
+          content: '•';
+          position: absolute;
+          left: -0.5rem;
+        }
+      }
+    }
+  }
+}

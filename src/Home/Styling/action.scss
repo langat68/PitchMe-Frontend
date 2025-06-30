@@ -1,52 +1,104 @@
+@import './variables';
+
 .action {
-  background: linear-gradient(to right, #4f46e5, #9333ea);
-  padding: 4rem 2rem;
-  color: white;
-  text-align: center;
+  padding: $section-padding;
+  position: relative;
+  @include gradient-bg($primary-blue, $primary-blue-dark);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
 
   &__container {
-    max-width: 800px;
-    margin: 0 auto;
+    @include container;
+    text-align: center;
+    position: relative;
+    z-index: 1;
   }
 
   &__badge {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.15);
     padding: 0.5rem 1rem;
-    border-radius: 999px;
-    font-weight: 500;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
+    background: rgba($white, 0.15);
+    color: $white;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    border: 1px solid rgba($white, 0.2);
+    backdrop-filter: blur(8px);
+  }
+
+  &__sparkle {
+    width: 16px;
+    height: 16px;
   }
 
   &__title {
-    font-size: 2rem;
+    font-family: $font-display;
+    font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
-    margin: 1rem 0;
+    color: $white;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
   }
 
   &__subtitle {
     font-size: 1.125rem;
-    line-height: 1.75;
-    font-weight: 300;
-    margin-bottom: 2rem;
+    color: rgba($white, 0.9);
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+    line-height: 1.6;
+
+    strong {
+      color: $white;
+      font-weight: 600;
+    }
   }
 
   &__button {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    background-color: white;
-    color: #4f46e5;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: $white;
+    color: $primary-blue;
+    text-decoration: none;
+    border-radius: $border-radius;
     font-weight: 600;
-    padding: 0.75rem 1.5rem;
-    border-radius: 999px;
-    transition: background-color 0.3s ease;
+    font-size: 1.125rem;
+    transition: all $transition-base;
+    box-shadow: $shadow-lg;
 
     &:hover {
-      background-color: #e0e7ff;
+      background: $gray-50;
+      transform: translateY(-2px);
+      box-shadow: $shadow-xl;
+
+      .action__icon {
+        transform: translateX(4px);
+      }
     }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+    transition: transform $transition-fast;
   }
 }
