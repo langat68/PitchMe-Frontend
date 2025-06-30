@@ -1,103 +1,83 @@
-/* src/components/Benefits.scss */
-
 .benefits {
-  padding: 5rem 1rem;
-  background-color: #fff;
+  background: #f9fafb;
+  padding: 5rem 2rem;
 
   &__container {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
   }
 
   &__header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
 
     h2 {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 700;
-      color: #111827;
-      margin-bottom: 1rem;
-    }
-
-    p {
-      font-size: 1.125rem;
-      color: #6b7280;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-  }
-
-  &__grid {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  }
-
-  &__card {
-    border: 2px solid #e5e7eb;
-    border-radius: 0.75rem;
-    padding: 2rem;
-    text-align: center;
-    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.3s ease;
-    background-color: #ffffff;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
-    transform-origin: center;
-    will-change: transform;
-
-    &:hover {
-      transform: scale(1.05) translateY(-6px);
-      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
-      border-color: #c7d2fe;
-      z-index: 2;
-    }
-
-    h3 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      margin-top: 1rem;
       color: #1f2937;
     }
 
     p {
       color: #6b7280;
+      font-size: 1.125rem;
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  &__card {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    h3 {
+      margin-top: 1rem;
+      font-size: 1.25rem;
+      color: #111827;
+    }
+
+    p {
+      margin-top: 0.5rem;
       font-size: 1rem;
-      margin-top: 0.75rem;
-      line-height: 1.6;
+      color: #6b7280;
     }
   }
 
   &__icon-wrap {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
     margin: 0 auto;
+    border-radius: 999px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease;
-  }
 
-  &__card:hover &__icon-wrap {
-    transform: scale(1.15);
-  }
+    &.blue-indigo {
+      background: linear-gradient(to right, #3b82f6, #6366f1);
+    }
 
-  &__icon {
-    width: 32px;
-    height: 32px;
-    color: white;
-  }
+    &.indigo-purple {
+      background: linear-gradient(to right, #6366f1, #8b5cf6);
+    }
 
-  /* Icon background themes */
-  .blue-indigo {
-    background: linear-gradient(to right, #3b82f6, #6366f1);
-  }
+    &.purple-pink {
+      background: linear-gradient(to right, #8b5cf6, #ec4899);
+    }
 
-  .indigo-purple {
-    background: linear-gradient(to right, #6366f1, #8b5cf6);
-  }
-
-  .purple-pink {
-    background: linear-gradient(to right, #8b5cf6, #ec4899);
+    .benefits__icon {
+      color: white;
+    }
   }
 }
