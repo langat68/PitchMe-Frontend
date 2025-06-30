@@ -1,0 +1,55 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.8); // subtle transparency
+  backdrop-filter: blur(12px); // smooth blur to blend with hero bg
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &--hidden {
+    transform: translateY(-100%);
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__icon {
+    background: linear-gradient(to right, #2563eb, #4f46e5);
+    padding: 0.4rem;
+    border-radius: 0.5rem;
+  }
+
+  &__brand {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #1f2937;
+  }
+
+  &__button {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #1d4ed8;
+    }
+  }
+}
