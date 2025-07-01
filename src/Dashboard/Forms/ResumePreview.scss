@@ -1,0 +1,389 @@
+// Resume Preview Container
+.resume-preview-container {
+  @media print {
+    box-shadow: none !important;
+  }
+}
+
+// Modern Template Styles
+.resume-modern {
+  background: white;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  max-width: 64rem;
+  margin: 0 auto;
+  min-height: 11in;
+
+  .resume-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #2563eb;
+
+    .resume-name {
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.875rem;
+      color: #4b5563;
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+
+        .contact-icon {
+          height: 1rem;
+          width: 1rem;
+        }
+      }
+    }
+  }
+
+  .resume-section {
+    margin-bottom: 2rem;
+
+    .section-title {
+      font-weight: 700;
+      color: #2563eb;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .summary-text {
+      color: #374151;
+      line-height: 1.625;
+    }
+  }
+
+  .experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    .experience-item {
+      .experience-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.5rem;
+
+        .experience-title-group {
+          .job-title {
+            font-weight: 600;
+            color: #111827;
+          }
+
+          .company-name {
+            color: #2563eb;
+            font-weight: 500;
+          }
+
+          .job-location {
+            color: #4b5563;
+          }
+        }
+
+        .job-dates {
+          color: #4b5563;
+          text-align: right;
+        }
+      }
+
+      .job-description {
+        color: #374151;
+        line-height: 1.625;
+      }
+    }
+  }
+
+  .education-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .education-item {
+      .education-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .education-title-group {
+          .degree {
+            font-weight: 600;
+            color: #111827;
+          }
+
+          .school-name {
+            color: #2563eb;
+          }
+
+          .school-location,
+          .gpa {
+            color: #4b5563;
+          }
+        }
+
+        .graduation-date {
+          color: #4b5563;
+        }
+      }
+    }
+  }
+
+  .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    .skill-chip {
+      background-color: #dbeafe;
+      color: #1e40af;
+      border-color: #bfdbfe;
+    }
+  }
+
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .project-item {
+      .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.5rem;
+
+        .project-title {
+          font-weight: 600;
+          color: #111827;
+        }
+
+        .project-link {
+          color: #2563eb;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .project-description {
+        color: #374151;
+        margin-bottom: 0.5rem;
+      }
+
+      .project-technologies {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+
+        .tech-chip {
+          font-size: 0.75rem;
+        }
+      }
+    }
+  }
+}
+
+// Classic Template Styles
+.resume-classic {
+  background: white;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  max-width: 64rem;
+  margin: 0 auto;
+  min-height: 11in;
+
+  .resume-header-classic {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #9ca3af;
+
+    .resume-name-classic {
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-info-classic {
+      font-size: 0.875rem;
+      color: #374151;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+  }
+
+  .resume-section-classic {
+    margin-bottom: 1.5rem;
+
+    .section-title-classic {
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid #d1d5db;
+      padding-bottom: 0.25rem;
+    }
+
+    .summary-text-classic {
+      color: #374151;
+      line-height: 1.625;
+    }
+  }
+
+  .experience-list-classic {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .experience-item-classic {
+      .experience-header-classic {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.25rem;
+
+        .experience-title-group-classic {
+          .job-title-classic {
+            font-weight: 700;
+            color: #111827;
+          }
+
+          .company-name-classic {
+            font-weight: 500;
+            color: #1f2937;
+          }
+        }
+
+        .job-dates-classic {
+          color: #374151;
+        }
+      }
+
+      .job-description-classic {
+        color: #374151;
+        line-height: 1.625;
+      }
+    }
+  }
+
+  .education-list-classic {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .education-item-classic {
+      .education-header-classic {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .education-title-group-classic {
+          .degree-classic {
+            font-weight: 700;
+            color: #111827;
+          }
+
+          .school-name-classic {
+            color: #1f2937;
+          }
+
+          .gpa-classic {
+            color: #374151;
+          }
+        }
+
+        .graduation-date-classic {
+          color: #374151;
+        }
+      }
+    }
+  }
+
+  .skills-text-classic {
+    color: #374151;
+  }
+
+  .projects-list-classic {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .project-item-classic {
+      .project-header-classic {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 0.25rem;
+
+        .project-title-classic {
+          font-weight: 700;
+          color: #111827;
+        }
+
+        .project-link-classic {
+          color: #374151;
+        }
+      }
+
+      .project-description-classic {
+        color: #374151;
+        margin-bottom: 0.25rem;
+      }
+
+      .project-technologies-classic {
+        color: #4b5563;
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .resume-modern,
+  .resume-classic {
+    padding: 1rem;
+    margin: 0 0.5rem;
+  }
+
+  .resume-modern .resume-header .contact-info {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .resume-modern .experience-item .experience-header,
+  .resume-modern .education-item .education-header,
+  .resume-classic .experience-item-classic .experience-header-classic,
+  .resume-classic .education-item-classic .education-header-classic {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .resume-modern .project-item .project-header,
+  .resume-classic .project-item-classic .project-header-classic {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
+// Print Styles
+@media print {
+  .resume-modern,
+  .resume-classic {
+    box-shadow: none !important;
+    margin: 0;
+    padding: 1rem;
+    max-width: none;
+    width: 100%;
+  }
+}

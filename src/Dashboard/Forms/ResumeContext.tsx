@@ -48,20 +48,27 @@ export interface ResumeData {
   summary: string;
 }
 
+// Template types
+export type TemplateId = 'modern' | 'classic' | 'creative' | 'minimal';
+
 interface ResumeContextType {
   resumeData: ResumeData;
+  selectedTemplate: TemplateId;
+  currentStep: number;
+  setCurrentStep: (step: number) => void;
   updateEducation: (education: Education[]) => void;
   updateExperience: (experience: Experience[]) => void;
   updatePersonalInfo: (personalInfo: PersonalInfo) => void;
   updateProjects: (projects: Project[]) => void;
   updateSkills: (skills: string[]) => void;
   updateSummary: (summary: string) => void;
+  setSelectedTemplate: (template: TemplateId) => void;
 }
 
 // Create Context
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
 
-// Initial data
+// Initial resume data
 const initialResumeData: ResumeData = {
   education: [],
   experience: [],
@@ -85,57 +92,45 @@ interface ResumeProviderProps {
 
 export const ResumeProvider: React.FC<ResumeProviderProps> = ({ children }) => {
   const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateId>('modern');
+  const [currentStep, setCurrentStep] = useState<number>(0); // ✅ added step state
 
   const updateEducation = (education: Education[]) => {
-    setResumeData(prev => ({
-      ...prev,
-      education
-    }));
+    setResumeData(prev => ({ ...prev, education }));
   };
 
   const updateExperience = (experience: Experience[]) => {
-    setResumeData(prev => ({
-      ...prev,
-      experience
-    }));
+    setResumeData(prev => ({ ...prev, experience }));
   };
 
   const updatePersonalInfo = (personalInfo: PersonalInfo) => {
-    setResumeData(prev => ({
-      ...prev,
-      personalInfo
-    }));
+    setResumeData(prev => ({ ...prev, personalInfo }));
   };
 
   const updateProjects = (projects: Project[]) => {
-    setResumeData(prev => ({
-      ...prev,
-      projects
-    }));
+    setResumeData(prev => ({ ...prev, projects }));
   };
 
   const updateSkills = (skills: string[]) => {
-    setResumeData(prev => ({
-      ...prev,
-      skills
-    }));
+    setResumeData(prev => ({ ...prev, skills }));
   };
 
   const updateSummary = (summary: string) => {
-    setResumeData(prev => ({
-      ...prev,
-      summary
-    }));
+    setResumeData(prev => ({ ...prev, summary }));
   };
 
   const value: ResumeContextType = {
     resumeData,
+    selectedTemplate,
+    currentStep, // ✅ exposed
+    setCurrentStep, // ✅ exposed
     updateEducation,
     updateExperience,
     updatePersonalInfo,
     updateProjects,
     updateSkills,
     updateSummary,
+    setSelectedTemplate,
   };
 
   return (
