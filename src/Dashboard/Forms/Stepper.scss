@@ -1,0 +1,83 @@
+/* Stepper.scss */
+
+/* Variables for easy theme changes */
+$primary-color: #3b82f6;
+$background-color: #f3f4f6;
+$text-color: #6b7280;
+$active-text-color: #000000;
+$white-color: #ffffff;
+$progress-bar-bg: #e5e7eb;
+
+.stepper-wrapper {
+  margin-bottom: 2rem;
+}
+
+.stepper-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: $background-color;
+  border-radius: 9999px; /* Pill shape */
+  padding: 0.5rem;
+}
+
+.step-container {
+  flex: 1;
+
+  .step-button {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    background-color: transparent;
+    color: $text-color;
+    font-weight: 500;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  &.active .step-button {
+    background-color: $white-color;
+    color: $active-text-color;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  }
+}
+
+.progress-bar-container {
+  background-color: $progress-bar-bg;
+  border-radius: 9999px;
+  height: 8px;
+  margin-top: 1rem;
+  overflow: hidden; /* Ensures the inner bar has rounded corners */
+}
+
+.progress-bar {
+  background-color: $primary-color;
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.4s ease-in-out;
+}
+
+.form-content {
+  margin-top: 1.5rem;
+}
+
+.form-step {
+  display: none;
+
+  &.active {
+    display: block;
+    /* You can add animations here for a smoother transition */
+    animation: fadeIn 0.5s;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

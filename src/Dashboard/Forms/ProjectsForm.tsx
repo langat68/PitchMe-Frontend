@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { Plus, Trash2, ExternalLink, FolderOpen, Sparkles } from 'lucide-react';
 import { useResume, type Project } from './ResumeContext';
-import './ProjectsForm.scss';
+//import './ProjectsForm.scss';
 
 const ProjectsForm = () => {
   const { resumeData, updateProjects } = useResume();
