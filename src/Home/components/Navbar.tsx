@@ -1,12 +1,25 @@
 import { useEffect, useState } from 'react';
-import { Target } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Target, LogOut } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../Styling/Navbar.scss';
+
+// if you use Redux:
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../Redux/store';
+import { logout } from '../../Redux/slices/authSlice';
 
 const Navbar = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [user, setUser] = useState<{ firstName: string; lastName: string } | null>(null);
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  // from Redux
+  const user = useSelector((state: RootState) => state.auth.user);
+
+  // fallback to localStorage if Redux user is null
+  const [localUser, setLocalUser] = useState<{ firstName: string; lastName: string } | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,11 +33,28 @@ const Navbar = () => {
   }, [lastScrollY]);
 
   useEffect(() => {
-    const userStr = localStorage.getItem('user');
-    if (userStr) {
-      setUser(JSON.parse(userStr));
+    if (!user) {
+      const userStr = localStorage.getItem('user');
+      if (userStr) {
+        setLocalUser(JSON.parse(userStr));
+      } else {
+        setLocalUser(null);
+      }
     }
-  }, []);
+  }, [user]);
+
+  const handleLogout = () => {
+    // clear Redux
+    dispatch(logout());
+
+    // clear localStorage fallback
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+
+    navigate('/login');
+  };
+
+  const displayedUser = user || localUser;
 
   return (
     <header className={`navbar ${!isVisible ? 'navbar--hidden' : ''}`}>
@@ -36,12 +66,19 @@ const Navbar = () => {
           <span className="navbar__brand">PitchMe</span>
         </div>
 
-        {user ? (
+        {displayedUser ? (
           <div className="navbar__user">
             <span className="navbar__initials">
-              {user.firstName[0].toUpperCase()}
-              {user.lastName[0].toUpperCase()}
+              {displayedUser.firstName[0].toUpperCase()}
+              {displayedUser.lastName[0].toUpperCase()}
             </span>
+            <button
+              className="navbar__logout"
+              onClick={handleLogout}
+              title="Log out"
+            >
+              <LogOut size={16} color="#fff" />
+            </button>
           </div>
         ) : (
           <Link to="/login" className="navbar__button">

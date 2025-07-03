@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FileText,
   ArrowLeft,
   ArrowRight,
   Eye,
   Download,
- 
 } from 'lucide-react';
-import { useResume } from './ResumeContext';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../Redux/store';
+import { setResume } from '../../Redux/slices/resumeSlice';
+import { fetchResume, saveResume } from '../../Redux/resumeApi';
+
 import PersonalInfoForm from './PersonalInfoForm';
 import SummaryForm from './SummaryForm';
 import ExperienceForm from './ExperienceForm';
@@ -24,21 +27,35 @@ interface ResumeBuilderProps {
 }
 
 const ResumeBuilder: React.FC<ResumeBuilderProps> = ({ onBackToHome }) => {
-  const { currentStep, setCurrentStep } = useResume();
+  const dispatch = useDispatch();
+  const { token } = useSelector((state: RootState) => state.auth);
+  const resume = useSelector((state: RootState) => state.resume.data);
+
+  const [currentStep, setCurrentStep] = useState(0);
   const [showPreview, setShowPreview] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
 
   const steps = [
-    { title: "Personal Info", component: PersonalInfoForm },
-    { title: "Summary", component: SummaryForm },
-    { title: "Experience", component: ExperienceForm },
-    { title: "Education", component: EducationForm },
-    { title: "Skills", component: SkillsForm },
-    { title: "Projects", component: ProjectsForm }
+    { title: 'Personal Info', component: PersonalInfoForm },
+    { title: 'Summary', component: SummaryForm },
+    { title: 'Experience', component: ExperienceForm },
+    { title: 'Education', component: EducationForm },
+    { title: 'Skills', component: SkillsForm },
+    { title: 'Projects', component: ProjectsForm },
   ];
 
   const CurrentStepComponent = steps[currentStep].component;
   const progress = ((currentStep + 1) / steps.length) * 100;
+
+  useEffect(() => {
+    if (token && !resume) {
+      fetchResume(token)
+        .then((data) => {
+          dispatch(setResume(data));
+        })
+        .catch((err) => console.error('Failed to load resume:', err));
+    }
+  }, [token, resume, dispatch]);
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
@@ -49,6 +66,14 @@ const ResumeBuilder: React.FC<ResumeBuilderProps> = ({ onBackToHome }) => {
   const handlePrevious = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const handleSave = () => {
+    if (token && resume) {
+      saveResume(token, resume)
+        .then(() => alert('✅ Resume saved to backend!'))
+        .catch((err) => console.error('Failed to save resume:', err));
     }
   };
 
@@ -94,12 +119,12 @@ const ResumeBuilder: React.FC<ResumeBuilderProps> = ({ onBackToHome }) => {
                   <FileText className="icon" />
                   <span>Templates</span>
                 </button>
-                <button
-                  onClick={handleExport}
-                  className="btn btn-primary"
-                >
+                <button onClick={handleExport} className="btn btn-primary">
                   <Download className="icon" />
                   <span>Download PDF</span>
+                </button>
+                <button onClick={handleSave} className="btn btn-success">
+                  <span>Save to Backend</span>
                 </button>
               </div>
             </div>
@@ -117,7 +142,10 @@ const ResumeBuilder: React.FC<ResumeBuilderProps> = ({ onBackToHome }) => {
       <div className="resume-header">
         <div className="resume-header__container">
           <div className="resume-header__left">
-            <button className="resume-header__back" onClick={() => onBackToHome?.()}>
+            <button
+              className="resume-header__back"
+              onClick={() => onBackToHome?.()}
+            >
               <ArrowLeft className="icon" />
               <span>Home</span>
             </button>
@@ -127,13 +155,25 @@ const ResumeBuilder: React.FC<ResumeBuilderProps> = ({ onBackToHome }) => {
             <span className="resume-header__title">Resumly</span>
           </div>
           <div className="resume-header__right">
-            <button className="resume-header__btn" onClick={() => setShowPreview(true)}>
+            <button
+              className="resume-header__btn"
+              onClick={() => setShowPreview(true)}
+            >
               <Eye className="icon" />
               <span>Preview</span>
             </button>
-            <button className="resume-header__btn" onClick={() => setShowTemplates(true)}>
+            <button
+              className="resume-header__btn"
+              onClick={() => setShowTemplates(true)}
+            >
               <FileText className="icon" />
               <span>Templates</span>
+            </button>
+            <button
+              className="resume-header__btn btn-success"
+              onClick={handleSave}
+            >
+              <span>Save</span>
             </button>
           </div>
         </div>
@@ -146,7 +186,8 @@ const ResumeBuilder: React.FC<ResumeBuilderProps> = ({ onBackToHome }) => {
               <div className="progress-card-content">
                 <div className="progress-header">
                   <h2 className="progress-title">
-                    Step {currentStep + 1} of {steps.length}: {steps[currentStep].title}
+                    Step {currentStep + 1} of {steps.length}:{' '}
+                    {steps[currentStep].title}
                   </h2>
                   <div className="progress-badge">
                     {Math.round(progress)}% Complete
@@ -229,7 +270,7 @@ const ResumeBuilder: React.FC<ResumeBuilderProps> = ({ onBackToHome }) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> 
     </div>
   );
 };
