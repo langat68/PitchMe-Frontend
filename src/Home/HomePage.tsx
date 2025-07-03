@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 // Move the imports for your homepage sections here
 import HeroSection from './components/Hero';

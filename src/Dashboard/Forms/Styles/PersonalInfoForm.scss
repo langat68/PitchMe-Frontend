@@ -1,0 +1,85 @@
+/* src/components/PersonalInfoForm.scss */
+
+.personal-info-form {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 2rem auto;
+  background-color: #fdfdfd;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-content {
+      .form-title {
+        font-weight: 700;
+        color: #111;
+      }
+
+      .form-description {
+        color: #555;
+        margin-top: 0.25rem;
+      }
+    }
+
+    .ai-enhance-button {
+      border-color: #4caf50;
+      color: #4caf50;
+      font-weight: 500;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: #4caf50;
+        color: #fff;
+      }
+
+      .spinning {
+        animation: spin 1.2s linear infinite;
+      }
+    }
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+
+    .MuiTextField-root {
+      background-color: #fff;
+      border-radius: 6px;
+    }
+  }
+
+  .pro-tip {
+    padding: 1rem 1.5rem;
+    background: #e3f2fd;
+    border-left: 5px solid #2196f3;
+    border-radius: 8px;
+
+    .tip-title {
+      color: #1976d2;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .tip-content {
+      color: #333;
+      line-height: 1.5;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

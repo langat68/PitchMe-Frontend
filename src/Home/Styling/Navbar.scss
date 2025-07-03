@@ -1,86 +1,293 @@
-@import './variables'; // Import the variables file
+// Variables
+$navbar-height: 60px;
+$navbar-bg: #1a1a1a;
+$navbar-bg-blur: rgba(26, 26, 26, 0.9);
+$text-primary: #ffffff;
+$text-secondary: #b3b3b3;
+$accent-color: #007bff;
+$accent-hover: #0056b3;
+$border-color: rgba(255, 255, 255, 0.1);
+$shadow-color: rgba(0, 0, 0, 0.3);
 
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin transition($properties: all, $duration: 0.3s, $timing: ease) {
+  transition: $properties $duration $timing;
+}
+
+@mixin glass-effect {
+  background: $navbar-bg-blur;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid $border-color;
+}
+
+// Main navbar styles
 .navbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  height: $navbar-height;
+  background: $navbar-bg;
   z-index: 1000;
-  transition: transform $transition-base, opacity $transition-base;
-  
-  @include glass-effect;
-  
+  @include transition(transform, 0.3s, ease-in-out);
+  box-shadow: 0 2px 10px $shadow-color;
+
   &--hidden {
     transform: translateY(-100%);
-    opacity: 0;
+  }
+
+  // Glassmorphism effect when scrolling
+  &.scrolled {
+    @include glass-effect;
   }
 
   &__container {
-    @include container;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 72px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    height: 100%;
+    @include flex-between;
+
+    @media (max-width: 768px) {
+      padding: 0 0.75rem;
+    }
   }
 
   &__logo {
-    display: flex;
-    align-items: center;
+    @include flex-center;
     gap: 0.75rem;
-    text-decoration: none;
-    color: $gray-800;
-    transition: color $transition-fast;
+    cursor: pointer;
+    @include transition(transform);
 
     &:hover {
-      color: $primary-blue;
+      transform: scale(1.05);
     }
   }
 
   &__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-center;
     width: 40px;
     height: 40px;
-    background: $primary-blue;
-    border-radius: $border-radius-sm;
-    transition: all $transition-fast;
+    background: linear-gradient(135deg, $accent-color, #00d4ff);
+    border-radius: 50%;
+    @include transition(all);
 
     &:hover {
-      background: $primary-blue-dark;
-      transform: translateY(-1px);
-      box-shadow: $shadow-md;
+      transform: rotate(15deg);
+      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
     }
   }
 
   &__brand {
-    font-family: $font-display;
     font-size: 1.5rem;
     font-weight: 700;
-    color: $gray-800;
+    color: $text-primary;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, $text-primary, #b3b3b3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    @media (max-width: 480px) {
+      font-size: 1.25rem;
+    }
+  }
+
+  &__user {
+    position: relative;
+  }
+
+  &__initials {
+    @include flex-center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, $accent-color, #00d4ff);
+    color: $text-primary;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 50%;
+    cursor: pointer;
+    @include transition(all);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: translateX(-100%);
+      @include transition(transform, 0.6s);
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 20px rgba(0, 123, 255, 0.5);
+
+      &::before {
+        transform: translateX(100%);
+      }
+    }
   }
 
   &__button {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.75rem 1.5rem;
-    background: $primary-blue;
-    color: $white;
+    padding: 0.5rem 1.5rem;
+    background: linear-gradient(135deg, $accent-color, #0056b3);
+    color: $text-primary;
     text-decoration: none;
-    border-radius: $border-radius-sm;
-    font-weight: 600;
-    transition: all $transition-fast;
-    border: none;
-    cursor: pointer;
+    border-radius: 25px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    @include transition(all);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, $accent-hover, #004085);
+      opacity: 0;
+      @include transition(opacity);
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: translateX(-100%);
+      @include transition(transform, 0.6s);
+    }
 
     &:hover {
-      background: $primary-blue-dark;
-      transform: translateY(-1px);
-      box-shadow: $shadow-md;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
+      border-color: rgba(255, 255, 255, 0.2);
+
+      &::before {
+        opacity: 1;
+      }
+
+      &::after {
+        transform: translateX(100%);
+      }
     }
 
     &:active {
       transform: translateY(0);
     }
+
+    @media (max-width: 480px) {
+      padding: 0.4rem 1.25rem;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .navbar {
+    &__container {
+      gap: 1rem;
+    }
+
+    &__logo {
+      gap: 0.5rem;
+    }
+
+    &__icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    &__initials {
+      width: 36px;
+      height: 36px;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+// Animation keyframes
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+// Additional utility classes
+.navbar-enter {
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.navbar__icon--pulse {
+  animation: pulse 2s infinite;
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .navbar {
+    background: $navbar-bg;
+    
+    &__brand {
+      color: $text-primary;
+    }
+  }
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  .navbar {
+    border-bottom: 2px solid $text-primary;
+    
+    &__button {
+      border: 2px solid $text-primary;
+    }
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .navbar,
+  .navbar__icon,
+  .navbar__initials,
+  .navbar__button {
+    transition: none;
+    animation: none;
+  }
+  
+  .navbar__icon:hover,
+  .navbar__initials:hover,
+  .navbar__button:hover {
+    transform: none;
   }
 }

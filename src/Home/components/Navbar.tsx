@@ -6,6 +6,7 @@ import '../Styling/Navbar.scss';
 const Navbar = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [user, setUser] = useState<{ firstName: string; lastName: string } | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,9 +16,15 @@ const Navbar = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
+
+  useEffect(() => {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      setUser(JSON.parse(userStr));
+    }
+  }, []);
 
   return (
     <header className={`navbar ${!isVisible ? 'navbar--hidden' : ''}`}>
@@ -29,9 +36,18 @@ const Navbar = () => {
           <span className="navbar__brand">PitchMe</span>
         </div>
 
-        <Link to="/signin" className="navbar__button">
-          Sign In
-        </Link>
+        {user ? (
+          <div className="navbar__user">
+            <span className="navbar__initials">
+              {user.firstName[0].toUpperCase()}
+              {user.lastName[0].toUpperCase()}
+            </span>
+          </div>
+        ) : (
+          <Link to="/login" className="navbar__button">
+            Sign In
+          </Link>
+        )}
       </div>
     </header>
   );

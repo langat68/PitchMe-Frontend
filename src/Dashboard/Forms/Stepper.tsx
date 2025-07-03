@@ -1,6 +1,6 @@
 // Stepper.tsx
 import React, { useState, useMemo } from 'react';
-import './Stepper.scss'; // Import the SCSS file
+import './Styles/Stepper.scss'; // Import the SCSS file
 
 // Import your actual form components
 import PersonalInfoForm from './PersonalInfoForm'; // Adjust path as needed

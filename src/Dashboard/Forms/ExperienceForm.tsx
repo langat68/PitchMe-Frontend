@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import { Plus, Trash2, Sparkles, Briefcase } from 'lucide-react';
 import { useResume } from './ResumeContext';
 import type { Experience } from './ResumeContext';
-import './ExperienceForm.scss';
+import './Styles/EducationForm.scss';
 
 const ExperienceForm = () => {
   const { resumeData, updateExperience } = useResume();

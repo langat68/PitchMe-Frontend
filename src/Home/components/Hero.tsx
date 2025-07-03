@@ -25,7 +25,7 @@ const HeroSection = () => {
         </p>
 
         <div className="hero-buttons">
-          <Link to="/builder">
+          <Link to="/build-resume">
             <Button variant="contained" className="cta-primary" endIcon={<ArrowRight />}>
               Create My Pitch
             </Button>

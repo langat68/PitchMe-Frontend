@@ -5,8 +5,7 @@ import {
   ArrowRight,
   Eye,
   Download,
-  Share2,
-  Sparkles
+ 
 } from 'lucide-react';
 import { useResume } from './ResumeContext';
 import PersonalInfoForm from './PersonalInfoForm';
@@ -18,7 +17,7 @@ import ProjectsForm from './ProjectsForm';
 import TemplateSelector from './TemplateSelector';
 import ResumePreview from './ResumePreview';
 import AIChat from '../Forms/AIChat';
-import './ResumeBuilderPage.scss';
+import './Styles/ResumeBuilderPage.scss';
 
 interface ResumeBuilderProps {
   onBackToHome?: () => void;

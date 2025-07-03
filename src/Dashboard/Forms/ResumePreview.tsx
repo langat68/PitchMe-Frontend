@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, Chip, Link, Paper } from '@mui/material';
 import { Mail, Phone, MapPin, Globe, Linkedin } from 'lucide-react';
 import { useResume } from './ResumeContext';
-import './ResumePreview.scss';
+import './Styles/ResumePreview.scss';
 
 const ResumePreview: React.FC = () => {
   const { resumeData, selectedTemplate } = useResume();

@@ -17,7 +17,7 @@ import Grid from '@mui/material/Grid';
 import { ArrowBack, Description, CheckCircle, Star } from '@mui/icons-material';
 import { useResume } from './ResumeContext';
 import type { TemplateId } from './ResumeContext';
-import './TemplateSelector.scss';
+import './Styles/TemplateSelector.scss';
 
 interface TemplateSelectorProps {
   onBack: () => void;

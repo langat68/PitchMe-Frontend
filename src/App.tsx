@@ -4,36 +4,52 @@ import Footer from './Home/components/Footer';
 import HomePage from './Home/HomePage';
 import ResumeBuilderPage from './Dashboard/Forms/ResumeBuilderPage';
 import { ResumeProvider } from './Dashboard/Forms/ResumeContext';
+import HeroSection from './Home/components/Hero';
+import Action from './Home/components/action';
+import Login from './Home/components/Login';
+import Register from './Home/components/Register';
+import './index.css';
 
 /**
- * A layout component for pages that need the standard Navbar and Footer.
- * The <Outlet /> component from react-router-dom will render the 
- * specific child route's element (e.g., HomePage).
+ * Full site layout: Navbar + Hero + Action + Footer
  */
-const SiteLayout = () => {
-  return (
-    <>
-      <Navbar />
-      <main>
-        <Outlet />
-      </main>
-      <Footer />
-    </>
-  );
-};
+const SiteLayout = () => (
+  <>
+    <Navbar />
+    <main>
+      <Outlet />
+    </main>
+    <HeroSection />
+    <Action />
+    <Footer />
+  </>
+);
+
+/**
+ * Blank layout: just renders the page content.
+ */
+const BlankLayout = () => (
+  <main>
+    <Outlet />
+  </main>
+);
 
 function App() {
   return (
     <ResumeProvider>
       <Routes>
-        {/* Routes that should have the Navbar and Footer */}
+        {/* Pages with full site layout */}
         <Route element={<SiteLayout />}>
           <Route path="/" element={<HomePage />} />
-          {/* Add other pages that need the main layout here */}
-          {/* Example: <Route path="/about" element={<AboutPage />} /> */}
         </Route>
 
-        {/* Standalone route for the resume builder without the layout */}
+        {/* Auth pages without Navbar/Footer */}
+        <Route element={<BlankLayout />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+
+        {/* Standalone route (no layout) */}
         <Route path="/build-resume" element={<ResumeBuilderPage />} />
       </Routes>
     </ResumeProvider>

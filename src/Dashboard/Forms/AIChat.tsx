@@ -7,10 +7,9 @@ import {
   User, 
   Sparkles,
   HelpCircle,
-  TrendingUp,
-  FileText
+ 
 } from 'lucide-react';
-import './AIChat.scss';
+import './Styles/AIChat.scss';
 
 interface Message {
   id: string;

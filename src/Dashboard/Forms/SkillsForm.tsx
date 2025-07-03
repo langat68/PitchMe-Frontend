@@ -7,12 +7,11 @@ import {
   Paper, 
   Chip, 
   Grid as Grid,
-  IconButton,
-  Divider 
+ 
 } from '@mui/material';
 import { Plus, X, Sparkles, Code, Lightbulb } from 'lucide-react';
 import { useResume } from './ResumeContext';
-import './SkillsForm.scss';
+import './Styles/SkillsForm.scss';
 
 const SkillsForm = () => {
   const { resumeData, updateSkills } = useResume();

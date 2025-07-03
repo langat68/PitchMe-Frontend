@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, TextField, Typography, Box, Paper, Chip } from '@mui/material';
 import { Sparkles, Target, TrendingUp } from 'lucide-react';
 import { useResume } from './ResumeContext';
-import './SummaryForm.scss';
+import './Styles/SummaryForm.scss';
 
 const SummaryForm = () => {
   const { resumeData, updateSummary } = useResume();

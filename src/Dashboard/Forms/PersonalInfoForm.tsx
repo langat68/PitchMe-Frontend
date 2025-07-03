@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, TextField, Typography, Box, Paper } from '@mui/material';
 import { Sparkles } from 'lucide-react';
 import { useResume } from './ResumeContext';
-import './PersonalInfoForm.scss';
+import './Styles/PersonalInfoForm.scss';
 
 const PersonalInfoForm = () => {
   const { resumeData, updatePersonalInfo } = useResume();

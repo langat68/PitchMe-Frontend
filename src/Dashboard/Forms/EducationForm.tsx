@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import { Plus, Trash2, GraduationCap } from 'lucide-react';
 import { useResume } from './ResumeContext';
 import type { Education } from './ResumeContext';
-import './EducationForm.scss';
+import './Styles/EducationForm.scss';
 
 const EducationForm = () => {
   const { resumeData, updateEducation } = useResume();
