@@ -1,43 +1,46 @@
 import { useState } from 'react';
 import { Button } from '@mui/material';
 import { Plus, Trash2, Sparkles, Briefcase } from 'lucide-react';
-import { useResume } from './ResumeContext';
-import type { Experience } from './ResumeContext';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../Redux/store';
+import { setExperience as setReduxExperience } from '../../Redux/slices/resumeSlice';
 import './Styles/EducationForm.scss';
 
 const ExperienceForm = () => {
-  const { resumeData, updateExperience } = useResume();
-  const [experiences, setExperiences] = useState<Experience[]>(resumeData.experience);
+  const dispatch = useDispatch();
+  const reduxExperience = useSelector((state: RootState) => state.resume.data?.experience) || [];
+  const [experiences, setExperiences] = useState(reduxExperience.map(exp => ({ ...exp, achievements: exp.achievements || [] })));
   const [enhancingId, setEnhancingId] = useState<string | null>(null);
 
   const addExperience = () => {
-    const newExperience: Experience = {
+    const newExperience = {
       id: Date.now().toString(),
-      title: '',
+      position: '', // Backend expects 'position'
       company: '',
       location: '',
       startDate: '',
       endDate: '',
-      current: false,
-      description: ''
+      isCurrentRole: false, // Backend expects 'isCurrentRole'
+      description: '',
+      achievements: []
     };
     const newExperiences = [...experiences, newExperience];
     setExperiences(newExperiences);
-    updateExperience(newExperiences);
+    dispatch(setReduxExperience(newExperiences));
   };
 
   const removeExperience = (id: string) => {
     const newExperiences = experiences.filter(exp => exp.id !== id);
     setExperiences(newExperiences);
-    updateExperience(newExperiences);
+    dispatch(setReduxExperience(newExperiences));
   };
 
-  const updateExperienceField = (id: string, field: string, value: string | boolean) => {
+  const updateExperienceField = (id: string, field: string, value: string | boolean | string[]) => {
     const newExperiences = experiences.map(exp => 
       exp.id === id ? { ...exp, [field]: value } : exp
     );
     setExperiences(newExperiences);
-    updateExperience(newExperiences);
+    dispatch(setReduxExperience(newExperiences));
   };
 
   const enhanceDescription = async (id: string) => {
@@ -120,7 +123,7 @@ const ExperienceForm = () => {
                 Position {index + 1}
               </span>
               <h4 className="card-title">
-                {experience.title || 'New Position'}
+                {experience.position || 'New Position'}
               </h4>
             </div>
             <div className="header-actions">
@@ -153,14 +156,14 @@ const ExperienceForm = () => {
           <div className="card-content">
             <div className="form-grid">
               <div className="form-field">
-                <label htmlFor={`title-${experience.id}`} className="field-label">
+                <label htmlFor={`position-${experience.id}`} className="field-label">
                   Job Title *
                 </label>
                 <input
-                  id={`title-${experience.id}`}
+                  id={`position-${experience.id}`}
                   className="field-input"
-                  value={experience.title}
-                  onChange={(e) => updateExperienceField(experience.id, 'title', e.target.value)}
+                  value={experience.position} 
+                  onChange={(e) => updateExperienceField(experience.id, 'position', e.target.value)}
                   placeholder="Senior Software Engineer"
                   required
                 />
@@ -211,17 +214,17 @@ const ExperienceForm = () => {
             <div className="date-section">
               <div className="checkbox-wrapper">
                 <input
-                  id={`current-${experience.id}`}
+                  id={`isCurrentRole-${experience.id}`} 
                   type="checkbox"
-                  checked={experience.current}
-                  onChange={(e) => updateExperienceField(experience.id, 'current', e.target.checked)}
+                  checked={experience.isCurrentRole} 
+                  onChange={(e) => updateExperienceField(experience.id, 'isCurrentRole', e.target.checked)}
                   className="checkbox-input"
                 />
-                <label htmlFor={`current-${experience.id}`} className="checkbox-label">
+                <label htmlFor={`isCurrentRole-${experience.id}`} className="checkbox-label">
                   I currently work here
                 </label>
               </div>
-              {!experience.current && (
+              {!experience.isCurrentRole && (
                 <div className="form-field end-date">
                   <label htmlFor={`endDate-${experience.id}`} className="field-label">
                     End Date
@@ -253,6 +256,23 @@ const ExperienceForm = () => {
               <div className="textarea-footer">
                 <span className="textarea-hint">Use bullet points to list your achievements</span>
                 <span className="character-count">{experience.description.length}/1000</span>
+              </div>
+            </div>
+            <div className="form-field full-width">
+              <label htmlFor={`achievements-${experience.id}`} className="field-label">
+                Achievements (Comma-separated)
+              </label>
+              <textarea
+                id={`achievements-${experience.id}`}
+                className="field-textarea"
+                value={experience.achievements?.join(', ') ?? ''}
+                onChange={(e) => updateExperienceField(experience.id, 'achievements', e.target.value.split(',').map(s => s.trim()).filter(s => s.length > 0))}
+                placeholder="Increased sales by 20%, Reduced costs by 15%"
+                maxLength={500}
+                rows={2}
+              />
+              <div className="textarea-footer">
+                <span className="character-count">{(experience.achievements?.join(', ') ?? '').length}/500</span>
               </div>
             </div>
           </div>

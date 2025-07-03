@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import { Button, TextField, Typography, Box, Paper, Chip } from '@mui/material';
 import { Sparkles, Target, TrendingUp } from 'lucide-react';
-import { useResume } from './ResumeContext';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../Redux/store';
+import { setSummary as setReduxSummary } from '../../Redux/slices/resumeSlice';
 import './Styles/SummaryForm.scss';
 
 const SummaryForm = () => {
-  const { resumeData, updateSummary } = useResume();
-  const [summary, setSummary] = useState(resumeData.summary);
+  const dispatch = useDispatch();
+  const reduxSummary = useSelector((state: RootState) => state.resume.data?.summary) || '';
+  const [summary, setSummary] = useState(reduxSummary);
   const [isAIEnhancing, setIsAIEnhancing] = useState(false);
   const [atsScore, setAtsScore] = useState(78);
 
   const handleChange = (value: string) => {
     setSummary(value);
-    updateSummary(value);
+    dispatch(setReduxSummary(value));
     
     // Mock ATS scoring
     const wordCount = value.split(' ').length;
@@ -38,7 +41,7 @@ const SummaryForm = () => {
     
     const randomSuggestion = aiSuggestions[Math.floor(Math.random() * aiSuggestions.length)];
     setSummary(randomSuggestion);
-    updateSummary(randomSuggestion);
+    dispatch(setReduxSummary(randomSuggestion));
     setAtsScore(92);
     
     setIsAIEnhancing(false);

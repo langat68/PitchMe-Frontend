@@ -1,16 +1,18 @@
 import { useState } from 'react';
 import { Button } from '@mui/material';
 import { Plus, Trash2, GraduationCap } from 'lucide-react';
-import { useResume } from './ResumeContext';
-import type { Education } from './ResumeContext';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../Redux/store';
+import { setEducation as setReduxEducation } from '../../Redux/slices/resumeSlice';
 import './Styles/EducationForm.scss';
 
 const EducationForm = () => {
-  const { resumeData, updateEducation } = useResume();
-  const [education, setEducation] = useState<Education[]>(resumeData.education);
+  const dispatch = useDispatch();
+  const reduxEducation = useSelector((state: RootState) => state.resume.data?.education) || [];
+  const [education, setEducation] = useState(reduxEducation);
 
   const addEducation = () => {
-    const newEducation: Education = {
+    const newEducation = {
       id: Date.now().toString(),
       degree: '',
       school: '',
@@ -20,13 +22,13 @@ const EducationForm = () => {
     };
     const newEducationList = [...education, newEducation];
     setEducation(newEducationList);
-    updateEducation(newEducationList);
+    dispatch(setReduxEducation(newEducationList));
   };
 
   const removeEducation = (id: string) => {
     const newEducationList = education.filter(edu => edu.id !== id);
     setEducation(newEducationList);
-    updateEducation(newEducationList);
+    dispatch(setReduxEducation(newEducationList));
   };
 
   const updateEducationField = (id: string, field: string, value: string) => {
@@ -34,7 +36,7 @@ const EducationForm = () => {
       edu.id === id ? { ...edu, [field]: value } : edu
     );
     setEducation(newEducationList);
-    updateEducation(newEducationList);
+    dispatch(setReduxEducation(newEducationList));
   };
 
   return (
@@ -111,15 +113,29 @@ const EducationForm = () => {
               </div>
               
               <div className="form-field">
-                <label htmlFor={`school-${edu.id}`} className="field-label">
+                <label htmlFor={`institution-${edu.id}`} className="field-label">
                   School/University *
                 </label>
                 <input
-                  id={`school-${edu.id}`}
+                  id={`institution-${edu.id}`}
                   className="field-input"
-                  value={edu.school}
-                  onChange={(e) => updateEducationField(edu.id, 'school', e.target.value)}
+                  value={edu.institution}
+                  onChange={(e) => updateEducationField(edu.id, 'institution', e.target.value)}
                   placeholder="University of California, Berkeley"
+                  required
+                />
+              </div>
+              
+              <div className="form-field">
+                <label htmlFor={`field-${edu.id}`} className="field-label">
+                  Field of Study *
+                </label>
+                <input
+                  id={`field-${edu.id}`}
+                  className="field-input"
+                  value={edu.field}
+                  onChange={(e) => updateEducationField(edu.id, 'field', e.target.value)}
+                  placeholder="Computer Science"
                   required
                 />
               </div>
@@ -138,16 +154,42 @@ const EducationForm = () => {
               </div>
               
               <div className="form-field">
-                <label htmlFor={`graduationDate-${edu.id}`} className="field-label">
-                  Graduation Date *
+                <label htmlFor={`startDate-${edu.id}`} className="field-label">
+                  Start Date *
                 </label>
                 <input
-                  id={`graduationDate-${edu.id}`}
+                  id={`startDate-${edu.id}`}
                   className="field-input"
                   type="month"
-                  value={edu.graduationDate}
-                  onChange={(e) => updateEducationField(edu.id, 'graduationDate', e.target.value)}
+                  value={edu.startDate}
+                  onChange={(e) => updateEducationField(edu.id, 'startDate', e.target.value)}
                   required
+                />
+              </div>
+              
+              <div className="form-field">
+                <label htmlFor={`endDate-${edu.id}`} className="field-label">
+                  End Date (Optional)
+                </label>
+                <input
+                  id={`endDate-${edu.id}`}
+                  className="field-input"
+                  type="month"
+                  value={edu.endDate}
+                  onChange={(e) => updateEducationField(edu.id, 'endDate', e.target.value)}
+                />
+              </div>
+              
+              <div className="form-field">
+                <label htmlFor={`endDate-${edu.id}`} className="field-label">
+                  End Date (Optional)
+                </label>
+                <input
+                  id={`endDate-${edu.id}`}
+                  className="field-input"
+                  type="month"
+                  value={edu.endDate}
+                  onChange={(e) => updateEducationField(edu.id, 'endDate', e.target.value)}
                 />
               </div>
               

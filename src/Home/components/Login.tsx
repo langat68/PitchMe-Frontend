@@ -1,11 +1,16 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { login } from '../../Redux/slices/authSlice'; // Import your login action
 import '../Styling/Auth.scss';
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -15,6 +20,9 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     setMessage('');
+    
+    console.log('🔐 Login attempt started...');
+    
     try {
       const res = await fetch('http://localhost:3000/auth/login', {
         method: 'POST',
@@ -23,20 +31,38 @@ const Login = () => {
       });
 
       const data = await res.json();
+      console.log('📡 Login response:', data);
 
       if (res.ok) {
-        localStorage.setItem('accessToken', data.data.accessToken);
+        // Store in localStorage with consistent key names
+        localStorage.setItem('token', data.data.accessToken); // Changed from 'accessToken' to 'token'
         localStorage.setItem('refreshToken', data.data.refreshToken);
         localStorage.setItem('user', JSON.stringify(data.data.user));
+        
+        console.log('💾 Stored in localStorage:');
+        console.log('Token:', data.data.accessToken);
+        console.log('User:', data.data.user);
+        
+        // Update Redux store
+        dispatch(login({
+          token: data.data.accessToken,
+          user: data.data.user,
+          refreshToken: data.data.refreshToken
+        }));
+        
+        console.log('🔄 Redux store updated');
+        
         setMessage('✅ Login successful!');
         setForm({ email: '', password: '' });
 
-        // Redirect to home page
-        window.location.href = '/';
+        // Use navigate instead of window.location.href to avoid full page refresh
+        navigate('/');
       } else {
+        console.error('❌ Login failed:', data.message);
         setMessage(data.message || '❌ Login failed.');
       }
-    } catch {
+    } catch (error) {
+      console.error('💥 Login error:', error);
       setMessage('⚠️ An error occurred.');
     } finally {
       setLoading(false);
@@ -71,7 +97,7 @@ const Login = () => {
       {message && <p>{message}</p>}
 
       <p>
-        Don’t have an account?{' '}
+        Don't have an account?{' '}
         <Link to="/register" className="auth-link">
           Create one
         </Link>

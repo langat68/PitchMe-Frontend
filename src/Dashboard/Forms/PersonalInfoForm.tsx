@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import { Button, TextField, Typography, Box, Paper } from '@mui/material';
 import { Sparkles } from 'lucide-react';
-import { useResume } from './ResumeContext';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../Redux/store';
+import { setPersonalInfo } from '../../Redux/slices/resumeSlice';
 import './Styles/PersonalInfoForm.scss';
 
 const PersonalInfoForm = () => {
-  const { resumeData, updatePersonalInfo } = useResume();
-  const [formData, setFormData] = useState(resumeData.personalInfo);
+  const dispatch = useDispatch();
+  const personalInfo = useSelector((state: RootState) => state.resume.data?.personalInfo) || {};
+  const [formData, setFormData] = useState(personalInfo);
   const [isAIEnhancing, setIsAIEnhancing] = useState(false);
 
   const handleChange = (field: string, value: string) => {
     const newFormData = { ...formData, [field]: value };
     setFormData(newFormData);
-    updatePersonalInfo(newFormData);
+    dispatch(setPersonalInfo(newFormData));
   };
 
   const handleAIEnhance = async () => {
@@ -29,7 +32,7 @@ const PersonalInfoForm = () => {
     
     const enhancedData = { ...formData, ...suggestions };
     setFormData(enhancedData);
-    updatePersonalInfo(enhancedData);
+    dispatch(setPersonalInfo(enhancedData));
     
     setIsAIEnhancing(false);
     // Replace toast with your preferred notification method

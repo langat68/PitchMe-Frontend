@@ -10,12 +10,15 @@ import {
  
 } from '@mui/material';
 import { Plus, X, Sparkles, Code, Lightbulb } from 'lucide-react';
-import { useResume } from './ResumeContext';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../Redux/store';
+import { setSkills as setReduxSkills } from '../../Redux/slices/resumeSlice';
 import './Styles/SkillsForm.scss';
 
 const SkillsForm = () => {
-  const { resumeData, updateSkills } = useResume();
-  const [skills, setSkills] = useState<string[]>(resumeData.skills);
+  const dispatch = useDispatch();
+  const reduxSkills = useSelector((state: RootState) => state.resume.data?.skills) || [];
+  const [skills, setSkills] = useState<string[]>(reduxSkills);
   const [newSkill, setNewSkill] = useState('');
   const [isAIEnhancing, setIsAIEnhancing] = useState(false);
 
@@ -32,7 +35,7 @@ const SkillsForm = () => {
     if (skill.trim() && !skills.includes(skill.trim())) {
       const newSkills = [...skills, skill.trim()];
       setSkills(newSkills);
-      updateSkills(newSkills);
+      dispatch(setReduxSkills(newSkills));
       setNewSkill('');
     }
   };
@@ -40,7 +43,7 @@ const SkillsForm = () => {
   const removeSkill = (skillToRemove: string) => {
     const newSkills = skills.filter(skill => skill !== skillToRemove);
     setSkills(newSkills);
-    updateSkills(newSkills);
+    dispatch(setReduxSkills(newSkills));
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
