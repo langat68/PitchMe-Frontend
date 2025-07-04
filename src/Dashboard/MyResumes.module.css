@@ -1,0 +1,63 @@
+.container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h1 {
+  font-size: 2em;
+  color: #333;
+}
+
+.resumeList {
+  list-style: none;
+  padding: 0;
+}
+
+.resumeItem {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.resumeTitle {
+  font-size: 1.2em;
+  color: #007bff;
+  font-weight: 600;
+}
+
+.buttonGroup button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.buttonGroup button:hover {
+  background-color: #0056b3;
+}
+
+.buttonGroup button:first-child {
+  background-color: #28a745; /* Green for View/Edit */
+}
+
+.buttonGroup button:first-child:hover {
+  background-color: #218838;
+}

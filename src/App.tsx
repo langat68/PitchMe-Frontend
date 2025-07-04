@@ -8,6 +8,9 @@ import HeroSection from './Home/components/Hero';
 import Action from './Home/components/action';
 import Login from './Home/components/Login';
 import Register from './Home/components/Register';
+import MyResumes from './Dashboard/MyResumes';
+import DashboardLayout from './Dashboard/DashboardLayout';
+import ResumeDetailPage from './Dashboard/Forms/ResumeDetailPage';
 import './index.css';
 
 /**
@@ -51,6 +54,12 @@ function App() {
 
         {/* Standalone route (no layout) */}
         <Route path="/build-resume" element={<ResumeBuilderPage />} />
+
+        {/* Dashboard routes */}
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route path="resumes" element={<MyResumes />} />
+          <Route path="resumes/:id" element={<ResumeDetailPage />} />
+        </Route>
       </Routes>
     </ResumeProvider>
   );

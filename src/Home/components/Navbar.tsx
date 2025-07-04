@@ -68,6 +68,9 @@ const Navbar = () => {
 
         {displayedUser ? (
           <div className="navbar__user">
+            <Link to="/dashboard/resumes" className="navbar__button">
+              My Resumes
+            </Link>
             <span className="navbar__initials">
               {displayedUser.firstName[0].toUpperCase()}
               {displayedUser.lastName[0].toUpperCase()}
